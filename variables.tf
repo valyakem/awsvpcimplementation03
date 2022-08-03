@@ -14,7 +14,7 @@ variable "elasticache_subnets" { default = []}
 variable "redshift_subnets" { default = []}
 variable "intra_subnets" { default = []}
 
-var "cidr" { default = "" }
+variable "cidr" { default = "" }
 
 
 
