@@ -29,7 +29,7 @@ variable "vpc-id" { default = "" }
 //                  TAGS VARIABLES                                    //
 //====================================================================//
 variable "data_classification" { default = "" } 
-variable "biz_unit" { default = "" }
+variable "business_unit" { default = "" }
 variable "environment" { default = "" }
 variable "application-id" { default = "" }
 variable "application-name" { default = "" }
