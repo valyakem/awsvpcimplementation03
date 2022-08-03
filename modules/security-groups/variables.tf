@@ -1,6 +1,3 @@
-terraform {
-  experiments = [variable_validation]
-}
 
 variable "ingress-rules-with-cidr" {
   type = list(object({

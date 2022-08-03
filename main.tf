@@ -253,25 +253,40 @@ data "aws_iam_policy_document" "generic_endpoint_policy" {
 //============================
 module "dynamic-sg-with-egressrule-and-ingressrules" {
   source                     = "./modules/security-groups"
-  security-group-name        = "sg-with-egressrule-and-ingressrules-sg03"
-  security-group-description = "sg-with-egressrule-and-ingressrules-sg03"
-  vpc-id                     = "vpc-08b3850710b9591bd"
+
+  security-group-name        = var.security-group-name
+  security-group-description = var.security-group-description
+  vpc-id                     = var.vpc-id
   ingress-rules-with-cidr = [
-    { from-port = "443", to-port = "443", protocol = "tcp", cidr-block = "172.31.0.0/16", description = "allow port-443 traffic" }
+    { 
+      from-port = "443", 
+      to-port = "443", 
+      protocol = "tcp", 
+      cidr-block = "172.31.0.0/16", 
+      description = "allow port-443 traffic" 
+      }
   ]
-  egress-rules             = [{ from-port = "0", to-port = "0", protocol = "-1", cidr-block = "0.0.0.0/0", description = "allow all" }]
+  egress-rules             = [
+    { 
+      from-port = "0", 
+      to-port = "0", 
+      protocol = "-1", 
+      cidr-block = "0.0.0.0/0", 
+      description = "allow all" 
+      }
+      ]
   ingress-rules-with-sg-id = []
 
   # Tagging variabless
-  businessunit        = "inf"
-  data-classification = "internal"
-  environment         = "sandbox"
-  application-id      = "1234"
-  application-name    = "tehchub"
-  application-owner   = "manpreet.singh1@rci.rogers.com"
-  application-role    = "app"
-  SCOA                = "123.1234.1234.1234.12345"
-  project-id          = "123456"
-  PII                 = "NO"
-  compliance          = "None"
+  businessunit        = var.biz_unit
+  data-classification = var.data_classification
+  environment         = var.environment
+  application-id      = var.application-id
+  application-name    = var.application-name
+  application-owner   = var.application-owner
+  application-role    = var.application-role
+  SCOA                = var.SCOA
+  project-id          = var.project-id 
+  PII                 = var.PII
+  compliance          = var.compliance
 }
