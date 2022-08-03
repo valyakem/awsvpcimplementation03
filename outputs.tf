@@ -539,3 +539,18 @@ output "vpc_endpoints" {
   description = "Array containing the full resource object and attributes for all endpoints created"
   value       = module.vpc_endpoints.endpoints
 }
+
+
+//Security group outputs
+//============================================
+### Dynamic sg02 outputs ###
+
+output "dynamic-sg02-id" {
+  value       = module.dynamic-sg-with-egressrule-and-ingressrules.dynamic-security-group-id
+  description = "Security Group ID"
+}
+
+output "dynamic-sg02-name" {
+  value       = module.dynamic-sg-with-egressrule-and-ingressrules.dynamic-security-group-name
+  description = "Security Group Name"
+}
