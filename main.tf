@@ -278,7 +278,7 @@ module "dynamic-sg-with-egressrule-and-ingressrules" {
   ingress-rules-with-sg-id = []
 
   # Tagging variabless
-  businessunit        = var.biz_unit
+  businessunit        = var.business_unit
   data-classification = var.data_classification
   environment         = var.environment
   application-id      = var.application-id
