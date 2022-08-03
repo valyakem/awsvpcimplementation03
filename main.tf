@@ -30,25 +30,25 @@ module "vpc" {
   redshift_subnets    = var.redshift_subnets
   intra_subnets       = var.intra_subnets 
 
-  create_database_subnet_group = false
+  create_database_subnet_group = var.create_database_subnet_group
 
-  manage_default_network_acl = true
+  manage_default_network_acl = var.manage_default_network_acl
   default_network_acl_tags   = { Name = "${local.name}-default" }
 
-  manage_default_route_table = true
+  manage_default_route_table = var.manage_default_route_table
   default_route_table_tags   = { Name = "${local.name}-default" }
 
-  manage_default_security_group = true
+  manage_default_security_group = var.manage_default_security_group
   default_security_group_tags   = { Name = "${local.name}-default" }
 
-  enable_dns_hostnames = true
-  enable_dns_support   = true
+  enable_dns_hostnames = var.enable_dns_hostnames
+  enable_dns_support   = var.enable_dns_support
 
-  enable_classiclink             = true
-  enable_classiclink_dns_support = true
+  enable_classiclink             = var.enable_classiclink
+  enable_classiclink_dns_support = var.enable_classiclink_dns_support
 
-  enable_nat_gateway = true
-  single_nat_gateway = true
+  enable_nat_gateway = var.enable_nat_gateway
+  single_nat_gateway = var.single_nat_gateway
 
   customer_gateways = {
     IP1 = {
@@ -62,17 +62,17 @@ module "vpc" {
     }
   }
 
-  enable_vpn_gateway = true
+  enable_vpn_gateway = var.enable_vpn_gateway
 
-  enable_dhcp_options              = true
-  dhcp_options_domain_name         = "service.consul"
-  dhcp_options_domain_name_servers = ["127.0.0.1", "10.10.0.2"]
+  enable_dhcp_options              = var.enable_dhcp_options
+  dhcp_options_domain_name         = var.dhcp_options_domain_name
+  dhcp_options_domain_name_servers = var.dhcp_options_domain_name_servers
 
   # VPC Flow Logs (Cloudwatch log group and IAM role will be created)
-  enable_flow_log                      = true
-  create_flow_log_cloudwatch_log_group = true
-  create_flow_log_cloudwatch_iam_role  = true
-  flow_log_max_aggregation_interval    = 60
+  enable_flow_log                      = var.enable_flow_log
+  create_flow_log_cloudwatch_log_group = var.create_flow_log_cloudwatch_log_group
+  create_flow_log_cloudwatch_iam_role  = var.create_flow_log_cloudwatch_iam_role
+  flow_log_max_aggregation_interval    = var.flow_log_max_aggregation_interval
 
   tags = local.tags
 }
@@ -90,7 +90,7 @@ data "aws_security_group" "default" {
 
 resource "aws_security_group" "vpc_tls" {
   name_prefix = "${local.name}-vpc_tls"
-  description = "Allow TLS inbound traffic"
+  description = var.tlc-description
   vpc_id      = module.vpc.vpc_id
 
   ingress {
