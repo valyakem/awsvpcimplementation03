@@ -1,14 +1,14 @@
 provider "aws" {
-  region = "us-east-1"
+  region = var.region
 }
 
 locals {
-  name   = "nbvpc"
-  region = "us-east-1"
+  name   = var.name
+  region = var.region
   tags = {
-    Owner       = "user"
-    Environment = "staging"
-    Name        = "nbvpc"
+    Owner       = "${var.Owner}"
+    Environment = "${var.Environment}"
+    Name        = "${var.Name}"
   }
 }
 
@@ -20,15 +20,15 @@ module "vpc" {
   source = "./modules/vpc"
 
   name = local.name
-  cidr = "20.10.0.0/16" # 10.0.0.0/8 is reserved for EC2-Classic
+  cidr = var.cidr # 10.0.0.0/8 is reserved for EC2-Classic
 
   azs                 = ["${local.region}a", "${local.region}b", "${local.region}c"]
-  private_subnets     = ["20.10.1.0/24", "20.10.2.0/24", "20.10.3.0/24"]
-  public_subnets      = ["20.10.11.0/24", "20.10.12.0/24", "20.10.13.0/24"]
-  database_subnets    = ["20.10.21.0/24", "20.10.22.0/24", "20.10.23.0/24"]
-  elasticache_subnets = ["20.10.31.0/24", "20.10.32.0/24", "20.10.33.0/24"]
-  redshift_subnets    = ["20.10.41.0/24", "20.10.42.0/24", "20.10.43.0/24"]
-  intra_subnets       = ["20.10.51.0/24", "20.10.52.0/24", "20.10.53.0/24"]
+  private_subnets     = var.private_subnets
+  public_subnets      = var.public_subnets
+  database_subnets    = var.database_subnets
+  elasticache_subnets = var.elasticache_subnets
+  redshift_subnets    = var.redshift_subnets
+  intra_subnets       = var.intra_subnets 
 
   create_database_subnet_group = false
 

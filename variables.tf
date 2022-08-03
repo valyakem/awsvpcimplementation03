@@ -1,8 +1,35 @@
-variable "biz_unit" { default = "" }
-variable "data_classification" { default = "" }
+//====================================================================//
+//                  NETWORKING VARIABLE                               //
+//====================================================================//
+variable "name" { default = "" }
+variable "region" { default = "" }
+variable "Owner" { default = "" }
+variable "Environment" { default = "" }
+variable "Name" { default = "" }
+
+variable "private_subnets" { default = []}
+variable "public_subnets" { default = []}
+variable "database_subnets" { default = []}
+variable "elasticache_subnets" { default = []}
+variable "redshift_subnets" { default = []}
+variable "intra_subnets" { default = []}
+
+var "cidr" { default = "" }
+
+
+
+//====================================================================//
+//                  TAGS VARIABLE                                     //
+//====================================================================//
 variable "security-group-name" { default = "" }   
 variable "security-group-description" { default = "" }   
 variable "vpc-id" { default = "" }
+
+//====================================================================//
+//                  TAGS VARIABLES                                    //
+//====================================================================//
+variable "data_classification" { default = "" } 
+variable "biz_unit" { default = "" }
 variable "environment" { default = "" }
 variable "application-id" { default = "" }
 variable "application-name" { default = "" }
