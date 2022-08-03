@@ -1,14 +1,14 @@
 provider "aws" {
-  region = "eu-west-1"
+  region = "us-east-1"
 }
 
 locals {
-  name   = "complete-example"
-  region = "eu-west-1"
+  name   = "nbvpc"
+  region = "us-east-1"
   tags = {
     Owner       = "user"
     Environment = "staging"
-    Name        = "complete"
+    Name        = "nbvpc"
   }
 }
 
@@ -77,8 +77,36 @@ module "vpc" {
   tags = local.tags
 }
 
+
+
 ################################################################################
-# VPC Endpoints Module
+# Supporting Resources
+################################################################################
+
+data "aws_security_group" "default" {
+  name   = "default"
+  vpc_id = module.vpc.vpc_id
+}
+
+resource "aws_security_group" "vpc_tls" {
+  name_prefix = "${local.name}-vpc_tls"
+  description = "Allow TLS inbound traffic"
+  vpc_id      = module.vpc.vpc_id
+
+  ingress {
+    description = "TLS from VPC"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = [module.vpc.vpc_cidr_block]
+  }
+
+  tags = local.tags
+}
+
+
+################################################################################
+# VPC Endpoints Module (Add as required)
 ################################################################################
 
 # module "vpc_endpoints" {
@@ -179,14 +207,6 @@ module "vpc" {
 #   create = false
 # }
 
-################################################################################
-# Supporting Resources
-################################################################################
-
-data "aws_security_group" "default" {
-  name   = "default"
-  vpc_id = module.vpc.vpc_id
-}
 
 # data "aws_iam_policy_document" "dynamodb_endpoint_policy" {
 #   statement {
@@ -228,18 +248,3 @@ data "aws_security_group" "default" {
 #   }
 # }
 
-resource "aws_security_group" "vpc_tls" {
-  name_prefix = "${local.name}-vpc_tls"
-  description = "Allow TLS inbound traffic"
-  vpc_id      = module.vpc.vpc_id
-
-  ingress {
-    description = "TLS from VPC"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = [module.vpc.vpc_cidr_block]
-  }
-
-  tags = local.tags
-}
